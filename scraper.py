@@ -1,6 +1,6 @@
-from googlesearch import search
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
+from googlesearch import search
 from fake_useragent import UserAgent
 
 
@@ -21,7 +21,6 @@ class GoogleSearchPro:
             for i in search(self.query, tld='com', num=self.number, stop=self.number, pause=2):
                 urls.append(i)
 
-            
 
             user_agent = UserAgent()
             
@@ -47,6 +46,9 @@ class GoogleSearchPro:
                     }
 
                     print(context)
+        
+        except AttributeError:
+            print("Attribute Error: Maybe we found a website which needs login")
 
         except Exception as e:
             print("Something is wrong: ", type(e).__name__)
@@ -55,7 +57,13 @@ class GoogleSearchPro:
 
 def main():
     keyword_query = input("Enter the query you want to search for: ")
-    number = int(input("Enter the number of result we want(Int): "))
+
+    try:
+        number = int(input("Enter the number of result you want(Int): "))
+    except ValueError:
+        print("Error: You have given string input, Please enter the number.")
+        number = int(input("Enter the number of result you want(Int): "))
+
 
     print("Getting result from Google for '",keyword_query,"' query....")
 
